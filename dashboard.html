@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f8f9fa;
+    }
+
+    nav {
+      display: flex;
+      background: #343a40;
+      padding: 10px;
+      gap: 10px;
+    }
+
+    nav button {
+      background: #6c757d;
+      color: #fff;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    nav button:hover {
+      background: #5a6268;
+    }
+
+    .page {
+      display: none;
+      padding: 20px;
+    }
+
+    .active {
+      display: block;
+    }
+
+    /* ToDo Styles */
+    .todo {
+      max-width: 600px;
+      margin: 0 auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 8px rgba(0,0,0,0.1);
+    }
+
+    .todo input[type="text"] {
+      padding: 10px;
+      width: 70%;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+      margin-bottom: 10px;
+    }
+
+    .todo button {
+      padding: 10px 15px;
+      border: none;
+      background: #28a745;
+      color: #fff;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    ul#taskList {
+      list-style: none;
+      padding: 0;
+    }
+
+    ul#taskList li {
+      display: flex;
+      justify-content: space-between;
+      background: #f1f1f1;
+      padding: 10px;
+      margin-bottom: 5px;
+      border-radius: 4px;
+    }
+
+    ul#taskList button {
+      margin-left: 5px;
+      background: #007bff;
+    }
+
+    ul#taskList button:last-child {
+      background: #dc3545;
+    }
+
+    /* Cards Page Styles */
+    .card-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      padding: 10px;
+    }
+
+    .card {
+      background: #fff;
+      padding: 20px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+      border-radius: 8px;
+      flex: 1 1 calc(33.33% - 10px);
+    }
+
+    @media (max-width: 768px) {
+      .card {
+        flex: 1 1 calc(50% - 10px);
+      }
+    }
+
+    @media (max-width: 480px) {
+      .card {
+        flex: 1 1 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <button onclick="showPage('home')">Home</button>
+    <button onclick="showPage('cards')">Cards Page</button>
+  </nav>
+
+  <div id="home" class="page active">
+    <div class="todo">
+      <h2>ToDo List</h2>
+      <input type="text" id="taskInput" placeholder="Enter a task">
+      <button onclick="addTask()">Add</button>
+      <ul id="taskList"></ul>
+    </div>
+  </div>
+
+  <div id="cards" class="page">
+    <h2 style="text-align:center;">Responsive Cards</h2>
+    <div class="card-container">
+      <div class="card">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
+      <div class="card">Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
+      <div class="card">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</div>
+    </div>
+  </div>
+
+  <script>
+    function showPage(id) {
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+    }
+
+    const taskList = document.getElementById('taskList');
+
+    function addTask() {
+      const input = document.getElementById('taskInput');
+      const task = input.value.trim();
+      if (task === '') return;
+
+      const li = document.createElement('li');
+      const span = document.createElement('span');
+      span.textContent = task;
+
+      const editBtn = document.createElement('button');
+      editBtn.textContent = 'Edit';
+      editBtn.onclick = () => {
+        const newText = prompt('Edit task:', span.textContent);
+        if (newText !== null) span.textContent = newText;
+      };
+
+      const delBtn = document.createElement('button');
+      delBtn.textContent = 'Delete';
+      delBtn.onclick = () => li.remove();
+
+      li.appendChild(span);
+      li.appendChild(editBtn);
+      li.appendChild(delBtn);
+      taskList.appendChild(li);
+      input.value = '';
+    }
+  </script>
+</body>
+</html>
