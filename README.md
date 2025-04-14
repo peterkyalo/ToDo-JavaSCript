@@ -1,1 +1,1 @@
-# ToDo-JavaSCript
+# ToDo-JavaScript
